@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 
-import { WEIGHTS } from '../../constants';
+import { WEIGHTS, QUERIES } from '../../constants';
 
 import Breadcrumbs from '../Breadcrumbs';
 import Select from '../Select';
@@ -14,8 +14,11 @@ const ShoeIndex = ({ sortId, setSortId }) => {
     <Wrapper>
       <MainColumn>
         <Header>
-          <Title>Running</Title>
-          <Select
+          <TitleColumn>
+            <TitleBreadcrumbs><OurBreadcrumbs /></TitleBreadcrumbs>
+            <Title>Running</Title>
+          </TitleColumn>
+          <SelectWrapper><Select
             label="Sort"
             value={sortId}
             onChange={(ev) => setSortId(ev.target.value)}
@@ -23,24 +26,46 @@ const ShoeIndex = ({ sortId, setSortId }) => {
             <option value="newest">Newest Releases</option>
             <option value="price">Price</option>
           </Select>
+          </SelectWrapper>
         </Header>
         <Spacer size={32} />
         <ShoeGrid />
       </MainColumn>
       <LeftColumn>
-        <Breadcrumbs>
-          <Breadcrumbs.Crumb href="/">Home</Breadcrumbs.Crumb>
-          <Breadcrumbs.Crumb href="/sale">Sale</Breadcrumbs.Crumb>
-          <Breadcrumbs.Crumb href="/sale/shoes">
-            Shoes
-          </Breadcrumbs.Crumb>
-        </Breadcrumbs>
+        <OurBreadcrumbs />
         <Spacer size={42} />
         <ShoeSidebar />
       </LeftColumn>
     </Wrapper>
   );
 };
+
+const OurBreadcrumbs = () => (
+  <Breadcrumbs>
+    <Breadcrumbs.Crumb href="/">Home</Breadcrumbs.Crumb>
+    <Breadcrumbs.Crumb href="/sale">Sale</Breadcrumbs.Crumb>
+    <Breadcrumbs.Crumb href="/sale/shoes">
+      Shoes
+    </Breadcrumbs.Crumb>
+  </Breadcrumbs>
+);
+
+const SelectWrapper = styled.div`
+@media ${QUERIES.tabletAndDown} {
+  display: none;
+}
+`
+const TitleColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+const TitleBreadcrumbs = styled.div`
+  display: none;
+  @media ${QUERIES.tabletAndDown} {
+    display: block;
+  }
+`
 
 const Wrapper = styled.div`
   display: flex;
@@ -51,6 +76,9 @@ const Wrapper = styled.div`
 
 const LeftColumn = styled.div`
   flex-basis: 248px;
+  @media ${QUERIES.tabletAndDown} {
+    display: none;
+  }
 `;
 
 const MainColumn = styled.div`
